@@ -12,12 +12,15 @@ const groupBy = (array, collect) => {
     }
     let B = [];
     for (let j = i + 1; j < array.length; j++) {
-      if (array[j][collect] === array[i][collect]) {
-        B.push(array[i]);
+      let objJ = array[j];
+      let objI = array[i];
+      if (objJ[collect] === objI[collect]) {
+        B.push(objI);
         let n = j;
         while (n < array.length) {
-          if (array[n][collect] === array[i][collect]) {
-            B.push(array[n]);
+          let objN = array[n];
+          if (objN[collect] === objI[collect]) {
+            B.push(objN);
             array.splice(n, 1);
             n--;
           }
@@ -27,10 +30,10 @@ const groupBy = (array, collect) => {
         j--;
         A.push(B);
       }
-      if (array[j][collect] !== array[i][collect]) {
+      if (objJ[collect] !== objI[collect]) {
         B = [];
         if (j == array.length - 1) {
-          B.push(array[i]);
+          B.push(objI);
           A.push(B);
           array.splice(i, 1);
           j--;
@@ -47,3 +50,13 @@ const groupBy = (array, collect) => {
   return A;
 };
 module.exports = groupBy;
+console.log(
+  groupBy(
+    [
+      { a: 1, b: 2 },
+      { a: 1, b: 3 },
+      { a: 2, b: 2 },
+    ],
+    "b"
+  )
+);
